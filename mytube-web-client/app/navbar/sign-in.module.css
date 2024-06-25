@@ -1,0 +1,16 @@
+.SignIn {
+    display: inline-block;
+    border: 1px solid black;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 24px;
+    font-family: "Roboto", "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.SignIn:hover {
+    background-color: aliceblue;
+    border: 1px solid transparent;
+}
