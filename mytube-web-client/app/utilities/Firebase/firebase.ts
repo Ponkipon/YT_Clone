@@ -8,6 +8,7 @@ import {
      onAuthStateChanged, 
      User } from "firebase/auth"
 import { config } from "dotenv";
+import path from "path";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -15,7 +16,15 @@ import { config } from "dotenv";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 config();
-const firebaseConfig = JSON.parse(process.env.FBC as string);
+const firebaseConfig = {
+    apiKey: `${process.env.FIREBASE_API_KEY}`,
+    authDomain: "yt-clone-91a79.firebaseapp.com",
+    projectId: "yt-clone-91a79",
+    storageBucket: "yt-clone-91a79.appspot.com",
+    messagingSenderId: "499639576894",
+    appId: "1:499639576894:web:96dd9698d81aa2ec3d646f",
+    measurementId: "G-7QFYWE8VWD"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
