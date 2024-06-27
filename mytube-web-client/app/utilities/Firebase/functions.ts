@@ -2,7 +2,7 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 
 const functions = getFunctions();
 
-const generateUploadUrlFunction = httpsCallable(functions, 'generateUploadUrl');
+const generateUploadUrlFunction = httpsCallable(functions, 'generateUploadURL');
 
 export async function uploadVideo(file: File) {
     const response: any = await generateUploadUrlFunction({
@@ -14,8 +14,8 @@ export async function uploadVideo(file: File) {
         method: 'PUT', 
         body: file,
         headers: {
-            'Content-Type': file.type
-        }
+            'Content-Type': file.type,
+        },
     });
 
     return uploadResult;

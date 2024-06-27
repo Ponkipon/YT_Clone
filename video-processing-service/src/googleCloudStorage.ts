@@ -27,7 +27,9 @@ export function setupDirectories() {
 export function convertVideo(rawVideoName: string, proccesedVideoName: string) {
     return new Promise<void>((resolve, reject) => {
         ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
-        .size('360x640') // convert recieved video to 360p
+        .fps(30)
+        .size('360x640') //TODO: Rework || convert recieved video to 360p, I don't know if it's the right way. Playing with compression for now
+        .addOptions(["-vcodec libx265 -crf 28"])
         .on("end", function() {
             console.log("Video Processing Complete");
             resolve();

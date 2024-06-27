@@ -32,7 +32,7 @@ export default function Navbar() {
                 </span>
             </Link>
             {
-                <Upload />
+                user && <Upload />
             }
             <SignIn user={user} />
         </nav>

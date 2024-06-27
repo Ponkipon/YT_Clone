@@ -6,29 +6,25 @@ import {
      signInWithPopup,
      GoogleAuthProvider, 
      onAuthStateChanged, 
-     User } from "firebase/auth"
-import { config } from "dotenv";
-import path from "path";
-
+     User } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-config();
+
 const firebaseConfig = {
-    apiKey: `${process.env.FIREBASE_API_KEY}`,
+    apiKey: "AIzaSyCK8wVMlYwbq-VqUg951r1cGN4Es9HG3eY",
     authDomain: "yt-clone-91a79.firebaseapp.com",
     projectId: "yt-clone-91a79",
     storageBucket: "yt-clone-91a79.appspot.com",
     messagingSenderId: "499639576894",
-    appId: "1:499639576894:web:96dd9698d81aa2ec3d646f",
-    measurementId: "G-7QFYWE8VWD"
+    appId: "1:499639576894:web:02f5a548771f32ed3d646f",
+    measurementId: "G-15BEYRTWQ7"
   };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 /**
  * Signs the user with google popup
