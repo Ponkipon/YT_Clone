@@ -1,6 +1,7 @@
 import { Storage } from "@google-cloud/storage";
 import fs from 'fs';
 import ffmpeg from "fluent-ffmpeg";
+import { removeVideo } from "./firestore";
 
 const storage = new Storage();
 
@@ -28,13 +29,16 @@ export function convertVideo(rawVideoName: string, proccesedVideoName: string) {
     return new Promise<void>((resolve, reject) => {
         ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
         .fps(30)
-        .size('360x640') //TODO: Rework || convert recieved video to 360p, I don't know if it's the right way. Playing with compression for now
-        .addOptions(["-vcodec libx265 -crf 28"])
+        .size('360x?') //TODO: Rework || convert recieved video to 360p, I don't know if it's the right way. Playing with compression for now
+        .videoCodec('libx265')
+        .addOptions(["-crf 30"])
         .on("end", function() {
             console.log("Video Processing Complete");
             resolve();
         })
         .on("error", function(error) {
+            const videoID = rawVideoName.split('.')[0];
+            removeVideo(videoID);
             console.log(`An Error Occured while processing the video.\n Error Message:${error.Message}`);
             reject(error);
         })

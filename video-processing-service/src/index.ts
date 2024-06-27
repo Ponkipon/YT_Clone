@@ -7,7 +7,7 @@ import {
     setupDirectories, 
     uploadProcessedVideo
 } from './googleCloudStorage';
-import { error } from 'console';
+import { isVideoNew, setVideo } from './firestore';
 
 setupDirectories();
 
@@ -28,8 +28,19 @@ app.post("/process-video", async (req, res) => {
         return res.status(400).send('Bad request. No Filename')
     }
 
-    const inputFileName = data.name;
+    const inputFileName = data.name; // Format of <UID>-<DATE>.<EXTENSION>
     const outputFileName = `processed-${inputFileName}`;
+    const videoID = inputFileName.split('.')[0];
+
+    if (!isVideoNew(videoID)) {
+        return res.status(400).send('Bad Request: Video is already processing or processed');
+    }else {
+        await setVideo(videoID,  {
+            id: videoID,
+            uid: videoID.split("-")[0],
+            status: 'processing'
+        });
+    }
 
     // get the raw file from storage
     await downloadRawVideo(inputFileName);
@@ -50,6 +61,11 @@ app.post("/process-video", async (req, res) => {
 
     // upload the processed video in storage
     await uploadProcessedVideo(outputFileName);
+
+    await setVideo(videoID, {
+        status: 'processed', 
+        filename: outputFileName
+    })
 
     // Deleting Videos when finished
     await Promise.all([
