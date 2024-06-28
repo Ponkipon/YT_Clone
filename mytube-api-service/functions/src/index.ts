@@ -1,4 +1,4 @@
-
+import {getVideos} from "./fetchData";
 import {initializeApp} from "firebase-admin/app";
 import * as functions from "firebase-functions";
 import {Firestore} from "firebase-admin/firestore";
@@ -21,4 +21,4 @@ export const createUser = functions.auth.user().onCreate((user) => {
   return;
 });
 
-export {generateUploadURL};
+export {generateUploadURL, getVideos};
