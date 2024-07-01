@@ -7,16 +7,19 @@ const storage = new Storage();
 
 const rawVideoBucketName = "mytclone-raw-videos";
 const processedVideoBucketName = "mytclone-processed-videos";
+const thumbnailsBucketName = "mytclone-thumbnails";
 
 const localRawVideoPath = "./raw-videos";
 const localProcessedVideoPath = "./processed-videos";
+const localThumbnailPath = "./thumbnails/"
 
 /**
- * Function to create local directories for raw and processed videos
+ * Function to create local directories for raw and processed videos, and thumbnails
  */
 export function setupDirectories() {
     ensureDirectoryExistence(localRawVideoPath);
     ensureDirectoryExistence(localProcessedVideoPath);
+    ensureDirectoryExistence(localThumbnailPath);
 }
 
 
@@ -28,10 +31,23 @@ export function setupDirectories() {
 export function convertVideo(rawVideoName: string, proccesedVideoName: string) {
     return new Promise<void>((resolve, reject) => {
         ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
-        .fps(30)
+        .screenshot({
+            timestamps: ['50%'],
+            filename: '%b',
+            folder: localThumbnailPath,
+            size: '320x240' 
+        })        
+        .on('filenames', function(filenames) {
+            console.log('screenshots saved to: ', localThumbnailPath + filenames.join(', '))
+        })
+        .on("end", function() {
+            console.log(`Thumbnail Created`);
+        });
+
+        ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
+        .fps(30) // also no idea if 30 fps worth it, will need a HUGE rework later 
         .size('360x?') //TODO: Rework || convert recieved video to 360p, I don't know if it's the right way. Playing with compression for now
-        .videoCodec('libx265')
-        .addOptions(["-crf 30"])
+        .addOptions(["-crf 28"])
         .on("end", function() {
             console.log("Video Processing Complete");
             resolve();
@@ -83,6 +99,30 @@ export async function uploadProcessedVideo(fileName: string) {
     await bucket.file(fileName).makePublic();
 }
 
+
+/**
+ * 
+ * @param fileName - name of the file to upload from the
+ * {@link localThumbnailPath} folder into the {@link thumbnailsBucketName} folder
+ * 
+ */
+export async function uploadThumbnail(fileName: string) {
+
+    const bucket = storage.bucket(thumbnailsBucketName);
+    const thumbnailName = fileName.split('.')[0] + '.png'
+
+    await bucket.upload(`${localThumbnailPath}${thumbnailName}`, {
+        destination: thumbnailName
+    });
+
+    console.log(
+        `Thumbnail ${localThumbnailPath}/${thumbnailName} uploaded to gs://${thumbnailsBucketName}/${thumbnailName}`
+    );
+
+    await bucket.file(thumbnailName).makePublic();
+}
+
+
 /**
  * @param fileName - name of a file that needs to be deleted from
  * {@link localRawVideoPath} folder
@@ -101,6 +141,10 @@ export function deleteProcessedVideo(fileName: string) {
     return deleteFile(`${localProcessedVideoPath}/${fileName}`);
 }
 
+export function deleteThumbnail(fileName: string) {
+    const thumbnailName = fileName.split('.')[0] + '.png'
+    return deleteFile(`${localThumbnailPath}/${thumbnailName}`)
+}
 
 /**
  * @param filePath - Path of a file to delete

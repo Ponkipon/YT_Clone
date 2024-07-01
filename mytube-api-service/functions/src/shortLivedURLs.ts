@@ -23,7 +23,7 @@ export const generateUploadURL = onCall({maxInstances: 1}, async (request) => {
   const [url] = await bucket.file(fileName).getSignedUrl({
     version: "v4",
     action: "write",
-    expires: Date.now() + 15 * 60 * 1000, // 15 minutes
+    expires: Date.now() + 60 * 1000, // 1 minute
   });
   return {url, fileName};
 });

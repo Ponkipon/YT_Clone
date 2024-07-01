@@ -6,14 +6,17 @@ import styles from "./page.module.css"
 
 export default async function Home() {
   const videos = await getVideos();
-
+  
   return (
     <main className={styles.main}>
       {
         videos.map((video) => (
-          <Link href={`/watch?v=${video.filename}`} key={video.id}>
-            <Image src={'/thumbnail-placeholder.png'} alt="video" width={120} height={80} className={styles.thumbnail} />
-          </Link>
+          <div className={styles.videos} key={video.id}>
+            <Link href={`/watch?v=${video.filename}`}>
+              <Image src={`https://storage.googleapis.com/mytclone-thumbnails/${video.thumbnailPath}`} alt="video" width={320} height={180} className={styles.thumbnail} />
+            </Link>
+            <p>{video.uid}</p>
+          </div>
         ))
       }
     </main>

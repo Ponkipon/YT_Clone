@@ -3,9 +3,11 @@ import {
     convertVideo, 
     deleteProcessedVideo, 
     deleteRawVideo, 
+    deleteThumbnail, 
     downloadRawVideo, 
     setupDirectories, 
-    uploadProcessedVideo
+    uploadProcessedVideo,
+    uploadThumbnail
 } from './googleCloudStorage';
 import { isVideoNew, setVideo } from './firestore';
 
@@ -52,6 +54,7 @@ app.post("/process-video", async (req, res) => {
         // Removing files in case of a fail
         await Promise.all([
         deleteRawVideo(inputFileName),
+        deleteThumbnail(inputFileName),
         deleteProcessedVideo(outputFileName)
         ])
 
@@ -59,12 +62,15 @@ app.post("/process-video", async (req, res) => {
         return res.status(500).send('Internal server error: Video processing failed');
     }
 
-    // upload the processed video in storage
+    // upload the processed video and thumbnail in storage
     await uploadProcessedVideo(outputFileName);
+    await uploadThumbnail(inputFileName);
+
 
     await setVideo(videoID, {
         status: 'processed', 
-        filename: outputFileName
+        filename: outputFileName,
+        thumbnailPath: inputFileName.split('.')[0] + '.png',
     })
 
     // Deleting Videos when finished

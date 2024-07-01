@@ -1,7 +1,14 @@
 .main {
-
+display: flex;
 }
 .thumbnail {
     margin: 10px;
     background-color: darkgray;
+    width: 240px;
+    height: 160px;
+}
+
+.videos {
+    width: 280px;
+    margin: 20px;
 }
