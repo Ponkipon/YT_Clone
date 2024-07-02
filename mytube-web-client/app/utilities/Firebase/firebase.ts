@@ -33,6 +33,7 @@ export const functions = getFunctions(app);
  * Signs the user with google popup
  * @returns a promise that returns with gooogle credentials
  */
+
 export function signInWithGoogle(){
     return signInWithPopup(auth, new GoogleAuthProvider());
 }

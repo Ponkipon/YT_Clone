@@ -1,12 +1,14 @@
 .main {
     display: flex;
-    position: absolute;
+    flex-wrap: wrap;
+    overflow-y: auto;
 }
 
 .thumbnail {
     width: 280px;
     height: 180px;
     border-radius: 2vh;
+    transition: all 0.3s;
 }
 
 .videos {
@@ -19,4 +21,15 @@
     justify-content: center;
     border-radius: 2vh;
     background-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.videos:hover {
+    scale: 1.01;
+    transform: translateY(-3px);
+}
+
+.videoTitle {
+    font-weight: 700;
+    margin: 10px;
 }

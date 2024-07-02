@@ -1,16 +1,58 @@
-.SignIn {
-    display: inline-block;
-    border: 1px solid black;
-    color: black;
-    padding: 10px 20px;
-    border-radius: 24px;
-    font-family: "Roboto", "Arial", sans-serif;
-    font-size: 14px;
-    font-weight: 500;
+.SignedIn {
+    border-radius: 100vh;
+    border: 2px solid rgb(90, 130, 230);
+    box-shadow: 0 0 0.5vh 0.1vh rgb(0, 0, 0);
     cursor: pointer;
+    transition: all 0.3s;
 }
 
-.SignIn:hover {
-    background-color: aliceblue;
-    border: 1px solid transparent;
+.SignedIn:hover {
+    box-shadow: 0 0 1vh 0.3vh rgb(20, 146, 255);
+}
+
+.button {
+    width: 110px;
+    height: 40px;
+    background-color: #101218;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.button:hover {
+    background-color: #202531;
+}
+
+
+.text {
+    width: 55px;
+    height: 100%;
+    font-size: 13px;
+    color: #6a8ef6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 600;
+}
+
+.iconContainer {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.icon {
+    transition: all 0.3s;
+}
+
+.button:hover .icon{
+    transform: translateY(-3px);
 }
