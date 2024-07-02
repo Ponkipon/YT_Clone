@@ -76,7 +76,8 @@ app.post("/process-video", async (req, res) => {
     // Deleting Videos when finished
     await Promise.all([
         deleteRawVideo(inputFileName),
-        deleteProcessedVideo(outputFileName)
+        deleteProcessedVideo(outputFileName),
+        deleteThumbnail(inputFileName)
         ])
     
     return res.status(200).send('Upload successfull')

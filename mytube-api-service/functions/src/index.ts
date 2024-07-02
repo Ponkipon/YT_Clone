@@ -3,7 +3,7 @@ import {initializeApp} from "firebase-admin/app";
 import * as functions from "firebase-functions";
 import {Firestore} from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
-import {generateUploadURL} from "./shortLivedURLs";
+import {generateUploadURL} from "./videoUploads";
 
 initializeApp();
 

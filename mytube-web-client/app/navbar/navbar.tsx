@@ -27,7 +27,7 @@ export default function Navbar() {
         <nav className={styles.nav}>
             <Link href="/">
                 <span className={styles.logoContainer}>
-                    <Image width={90} height={30}
+                    <Image width={45} height={45}
                     src="/showoff-logo.svg" alt="LOGO"/>
                 </span>
             </Link>

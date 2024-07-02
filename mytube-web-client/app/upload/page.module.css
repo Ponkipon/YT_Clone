@@ -1,0 +1,51 @@
+.upload {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 17px;
+    padding: 0.8em 1.5em 0.8em 1.2em;
+    color: white;
+    background: #6352fd;
+    background: linear-gradient(0deg, rgb(4,160,255) 0%, rgb(90, 130, 230) 100%);
+    border: none;
+    box-shadow: 0 0.7em 1.5em -0.5em rgb(20, 146, 255);
+    letter-spacing: 0.05em;
+    border-radius: 20em;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.uploadInput {
+    display: none;
+}
+
+.buttonBox {
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: end;
+}
+
+.main {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 20px;
+}
+
+.upload svg {
+    margin-right: 8px; 
+}
+
+.upload:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em rgb(60, 146, 255);
+    transform: scale(1.1);
+}
+
+.upload:active {
+    box-shadow: 0 0.3em 1em -0.5em rgb(160, 109, 255);
+}
