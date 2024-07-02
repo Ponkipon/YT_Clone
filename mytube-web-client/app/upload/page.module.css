@@ -1,7 +1,7 @@
 .upload {
+    margin-top: 15px;
     display: flex;
     align-items: center;
-    position: absolute;
     font-family: inherit;
     font-weight: 500;
     font-size: 17px;
@@ -17,26 +17,6 @@
     transition: 0.3s ease;
 }
 
-.uploadInput {
-    display: none;
-}
-
-.buttonBox {
-    min-height: 100vh;
-    padding: 0 0.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: baseline;
-    align-items: end;
-}
-
-.main {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    padding: 20px;
-}
-
 .upload svg {
     margin-right: 8px; 
 }
@@ -48,4 +28,48 @@
 
 .upload:active {
     box-shadow: 0 0.3em 1em -0.5em rgb(160, 109, 255);
+}
+
+.upload.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.uploadInput {
+    display: none;
+}
+
+.uploadInput:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.buttonBox {
+    margin: 15px;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.main {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 20px;
+}
+
+.titleInput {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    font-weight: 500;
+    font-size: .8vw;
+    color: #fff;
+    background-color: rgb(28,28,30);
+    box-shadow: 0 0 .4vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
+    border-radius: 0.4vw;
+    border: none;
+    outline: none;
+    padding: 0.4vw;
+    max-width: 190px;
+    transition: .4s;
 }

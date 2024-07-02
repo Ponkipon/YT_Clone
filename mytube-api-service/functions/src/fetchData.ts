@@ -8,6 +8,7 @@ const videoCollectionID = "videos";
 export interface Video {
     id?: string,
     uid?: string,
+    userid?: string,
     filename?: string,
     status?: "processing" | "processed",
     title?: string,

@@ -15,7 +15,7 @@ export default async function Home() {
             <Link href={`/watch?v=${video.filename}`}>
               <Image src={`https://storage.googleapis.com/mytclone-thumbnails/${video.thumbnailPath}`} alt="video" width={320} height={180} className={styles.thumbnail} />
             </Link>
-            <p>{video.uid}</p>
+            <p>{video.title}</p>
           </div>
         ))
       }

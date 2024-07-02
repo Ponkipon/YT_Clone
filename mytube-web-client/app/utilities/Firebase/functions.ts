@@ -5,9 +5,10 @@ const generateUploadUrlFunction = httpsCallable(functions, 'generateUploadURL');
 const getVideosFunction = httpsCallable(functions, 'getVideos');
 
 
-export async function uploadVideo(file: File) {
+export async function uploadVideo(file: File, title: string) {
     const response: any = await generateUploadUrlFunction({
-        fileExtension: file.name.split('.').pop()
+        fileExtension: file.name.split('.').pop(),
+        title: title
     });
         
     // Upload the file via the signed URL
@@ -26,6 +27,7 @@ export async function uploadVideo(file: File) {
 export interface Video {
     id?: string,
     uid?: string,
+    userid?: string,
     filename?: string,
     status?: 'processing' | 'processed',
     title?: string,
