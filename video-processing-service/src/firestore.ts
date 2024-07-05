@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase-admin/app";
-import { Firestore } from "firebase-admin/firestore";
+import { FieldValue, Firestore } from "firebase-admin/firestore";
 import { credential } from "firebase-admin";
 
 initializeApp({credential: credential.applicationDefault()});
@@ -34,21 +34,33 @@ async function getVideo(videoID: string) {
     return (snapshot.data() as Video) ?? {};
 }
 
-export function setVideo(videoID: string, video: Video) {
+export function setFirestoreMetadata(videoID: string, video: Video) {
+    console.log('setFirestoreMetadata: working..');
     return firestore
     .collection(videoCollectionID)
     .doc(videoID)
     .set(video, {merge: true});
 }
 
-export function removeVideo(videoID: string) {
+export function removeVideoInFirestore(videoID: string) {
     return firestore
     .collection(videoCollectionID)
     .doc(videoID)
     .delete();
 }
 
-export async function isVideoNew(videoID: string) {
+export function rollbackStatusOnProcessingFail(videoID: string) {
+    return firestore
+    .collection(videoCollectionID)
+    .doc(videoID)
+    .update(
+        {
+            status:FieldValue.delete()
+        }
+    );
+}
+
+export async function checkVideoEntryInDB(videoID: string) {
     const video = await getVideo(videoID);
     return video?.status === undefined;
 }

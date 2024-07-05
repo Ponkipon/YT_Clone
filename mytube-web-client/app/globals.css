@@ -2,6 +2,7 @@ body {
     background: linear-gradient(-45deg, rgb(200, 208, 255) 0%, rgb(45, 72, 141) 100%);
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     height: 100vh;
     width: 100%;
     margin: 0;

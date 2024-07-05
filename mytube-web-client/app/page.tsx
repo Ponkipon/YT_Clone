@@ -13,7 +13,7 @@ export default async function Home() {
         videos.map((video) => (
           <div className={styles.videos} key={video.id} >
             <Link href={`/watch?v=${video.filename}`}>
-              <Image src={`https://storage.googleapis.com/mytclone-thumbnails/${video.thumbnailPath}`} alt="video" width={320} height={180} className={styles.thumbnail} />
+              <Image src={`https://storage.googleapis.com/mytclone-thumbnails/${video.thumbnailPath}`} alt="video" height={180} width={320} className={styles.thumbnail} />
             </Link>
             <span className={styles.videoTitle}>{video.title}</span>
           </div>

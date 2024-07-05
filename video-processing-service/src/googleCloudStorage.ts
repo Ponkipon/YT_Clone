@@ -1,7 +1,7 @@
 import { Storage } from "@google-cloud/storage";
 import fs from 'fs';
 import ffmpeg from "fluent-ffmpeg";
-import { removeVideo } from "./firestore";
+import { resolve } from "path";
 
 const storage = new Storage();
 
@@ -29,39 +29,40 @@ export function setupDirectories() {
 *  @returns - A promise that resolves when the video has been converted
 */
 export function convertVideo(rawVideoName: string, proccesedVideoName: string) {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void> ((resolve, reject) => {
+        // Process thumbnail
         ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
-        .screenshot({
-            timestamps: ['50%'],
-            filename: '%b',
-            folder: localThumbnailPath,
-            size: '320x240' 
-        })        
-        .on('filenames', function(filenames) {
-            console.log('screenshots saved to: ', localThumbnailPath + filenames.join(', '))
-        })
-        .on("end", function() {
-            console.log(`Thumbnail Created`);
-        });
+            .screenshot({
+                timestamps: ['50%'],
+                filename: '%b',
+                folder: localThumbnailPath,
+                size: '320x240' 
+            })
+            .on("end", function () {
+                console.log('Thumbnail Created');
+            })
+            .on("error", function(error) {
+                console.log(`An error occurred while processing the thumbnail. Error Message: ${error.message}`);
+                reject(error);
+            });
 
+        // Process video
         ffmpeg(`${localRawVideoPath}/${rawVideoName}`)
-        .fps(30) // also no idea if 30 fps worth it, will need a HUGE rework later 
-        .size('360x?') //TODO: Rework || convert recieved video to 360p, I don't know if it's the right way. Playing with compression for now
-        .addOptions(["-crf 28"])
-        .on("end", function() {
-            console.log("Video Processing Complete");
-            resolve();
-        })
-        .on("error", function(error) {
-            const videoID = rawVideoName.split('.')[0];
-            removeVideo(videoID);
-            console.log(`An Error Occured while processing the video.\n Error Message:${error.Message}`);
-            reject(error);
-        })
-        .save(`${localProcessedVideoPath}/${proccesedVideoName}`);
-        
-    });
-}
+            .fps(30) // Set FPS to 30
+            .size('360x?') // Convert video to 360p
+            .addOptions(["-crf 28"]) // Compression options
+            .on("end", function() {
+                console.log("Video Processing Complete");
+                resolve();
+            })
+            .on("error", function(error) {
+                console.log(`An error occurred while processing the video. Error Message: ${error.message}`);
+                reject(error);
+            })
+            .save(`${localProcessedVideoPath}/${proccesedVideoName}`);
+        });
+};
+
 
 /**
  * @param fileName - name of the file to download from
@@ -75,8 +76,7 @@ export async function downloadRawVideo(fileName: string) {
     
     console.log(
         `gs://${rawVideoBucketName}/${fileName} downloaded to ${localRawVideoPath}/${fileName}`
-    )
-    
+    );
 }
 
 
@@ -98,6 +98,16 @@ export async function uploadProcessedVideo(fileName: string) {
 
     await bucket.file(fileName).makePublic();
 }
+
+export async function deleteRawBucketVideo(fileName: string) {
+    const bucket = storage.bucket(rawVideoBucketName);
+
+    await bucket.file(fileName).delete()
+
+    console.log(`File: ${fileName} was deleted from bucket ${rawVideoBucketName}`)
+};
+    
+
 
 
 /**
