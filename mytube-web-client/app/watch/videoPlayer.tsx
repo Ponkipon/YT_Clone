@@ -21,7 +21,7 @@ export default async function VideoPlayer() {
     return ( 
         <div className={styles.videoPlayerContainer}>
             <div className={styles.VideoPlayer}>
-                {<video controls src={videoPrefix + videoSrc} />}
+                {<video className={styles.video} controls src={videoPrefix + videoSrc} />}
             </div>
             <div className={styles.TitleAndDescContainer}>
                 <span className={styles.title}>{dataFetch.title || 'No title'}</span>
