@@ -20,7 +20,15 @@ export interface Video {
 export const getVideos = onCall({maxInstances: 1}, async () => {
   const snapshot = await firestore
     .collection(videoCollectionID)
-    .limit(10)
+    .limit(24)
     .get();
   return snapshot.docs.map((doc) => doc.data());
+});
+
+
+export const getVideo = onCall({maxInstances: 1}, async (request) => {
+  const data = request.data;
+  const docRef = firestore.collection(videoCollectionID).doc(data.videoID);
+  const doc = await docRef.get();
+  return doc.data();
 });

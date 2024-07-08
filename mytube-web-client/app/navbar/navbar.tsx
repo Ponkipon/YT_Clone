@@ -25,12 +25,14 @@ export default function Navbar() {
 
     return ( 
         <nav className={styles.nav}>
-            <Link href="/">
-                <span className={styles.logoContainer}>
-                    <Image width={45} height={45}
-                    src="/showoff-logo.svg" alt="LOGO"/>
-                </span>
-            </Link>
+            <div className={styles.logo}>
+                <Link href="/">
+                    <span>
+                        <Image width={45} height={45}
+                        src="/showoff-logo.svg" alt="LOGO"/>
+                    </span>
+                </Link>
+            </div>
             {
                 user && <Upload />
             }

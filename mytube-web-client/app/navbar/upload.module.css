@@ -14,8 +14,9 @@
     cursor: pointer;
     font-size: 10px;
     padding: 0.4em;
+    transition: 0.3s all;
 }
 
 .uploadButton:hover {
-    background-color: gainsboro;
+    background-color: rgba(220, 220, 220, 0.3);
 }

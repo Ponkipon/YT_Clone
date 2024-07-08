@@ -1,5 +1,32 @@
 .VideoPlayer {
-    margin-left: 15px;
-    height: 70vh;
+    margin: 15px;
+    width: 70%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 1vh;
+    background-color: rgba(33, 33, 33, 0.2);
+}
+
+.TitleAndDescContainer {
+    display: grid;
+    margin: 15px;
+    width: 70%;
+    height: auto;
+    border-radius: 1vh;
+    background-color: rgba(33, 33, 33, 0.2);
+}
+
+.title{
+    font-size: 2em;
+    font-weight: 700;
+    text-align: start;
+    margin: 20px;
+}
+
+.desc {
+    align-self: bottom;
+    margin-left: 20px;
+    margin-bottom: 20px;
 }

@@ -6,7 +6,7 @@ import styles from "./page.module.css"
 
 export default async function Home() {
   const videos = await getVideos();
-  
+
   return (
     <main className={styles.main}>
       {

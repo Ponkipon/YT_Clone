@@ -42,6 +42,7 @@ export const generateUploadURL = onCall({maxInstances: 1}, async (request) => {
     id: videoID,
     userid: auth.uid,
     title: data.title,
+    description: data.description,
   };
 
   await firestore

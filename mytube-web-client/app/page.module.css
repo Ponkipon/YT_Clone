@@ -1,5 +1,5 @@
 .main {
-    width: 99%;
+    width: 98%;
     display: grid; 
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     grid-template-rows: repeat(auto-fill, minmax(180px, 1fr));
@@ -10,6 +10,7 @@
 
 .thumbnail {
     width: 100%;
+    height: auto;
     border-radius: 2vh;
     aspect-ratio: 16/9;
     transition: all 0.3s;
@@ -19,8 +20,6 @@
     width: 95%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     max-width: 320px;
     height: auto;
     border-radius: 2vh;
@@ -29,6 +28,11 @@
     box-sizing: border-box;
     overflow: hidden;
     margin: 10px;
+    text-align: center;
+}
+
+.videos img {
+    display: block;
 }
 
 .videos:hover {
@@ -37,7 +41,16 @@
 }
 
 .videoTitle {
+    height: 38px;
     font-weight: 700;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-flex;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
 }

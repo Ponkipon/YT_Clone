@@ -5,26 +5,33 @@ import { uploadVideo } from "../utilities/Firebase/functions"
 import styles from "./page.module.css"
 export default function UploadPage() {
     const [title, setTitle] = useState('')
+    let [description = '', setDescription] = useState('')
     const [isTitleProvided, setIsTitleProvided] = useState(false);
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setTitle(event.target.value);
         setIsTitleProvided(value.trim().length > 0);
+        console.log(title);
+    }
+
+    const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setDescription(event.target.value);
+        console.log(description);
     }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.item(0);
         if (file && isTitleProvided) {
-            handleUpload(file, title);
+            handleUpload(file, title, description);
         } else {
             alert('Please provide a video title before uploading.');
         }
     }
 
-    const handleUpload = async (file: File, title: string) => {
+    const handleUpload = async (file: File, title: string, description: string) => {
         try {
-            const response = await uploadVideo(file, title);
+            const response = await uploadVideo(file, title, description);
             alert(`File uploaded succesfully. Response: ${JSON.stringify(response)}`);
         } catch (error) {
             alert(`Failed to Upload. Error Code: ${error}`);
@@ -40,6 +47,13 @@ export default function UploadPage() {
                     placeholder="Enter video title" 
                     value={title} 
                     onChange={handleTitleChange} 
+                    className={styles.titleInput}
+                />
+                <input 
+                    type="text" 
+                    placeholder="Enter video Description (optional)" 
+                    value={description} 
+                    onChange={handleDescriptionChange} 
                     className={styles.titleInput}
                 />
                 <input 
