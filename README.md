@@ -44,7 +44,7 @@ Before deploying this service, ensure you have the following:
 1.  **Clone the repository:**
 
     ```bash
-    git clone [<repository_url>](https://github.com/Ponkipon/YT_Clone/)
+    git clone https://github.com/Ponkipon/YT_Clone/
     cd video-processing-service
     ```
 
